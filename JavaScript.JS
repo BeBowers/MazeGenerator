@@ -41,6 +41,10 @@ function initialize(){
 } }
         pts.push(row);
     }
+    var x = Math.floor(Math.random()*gridSize);
+    var y = Math.floor(Math.random()*gridSize);
+    ptStack.push(pts[x][y]);
+    ptStack[0].visited = true;
 }
 // used to store all the paths
 var paths = [];

@@ -1,4 +1,27 @@
 //Constructor for a point object
+// used to store 2-Dimensional array of points
+var pts = [];
+// variable to set the size of the grid
+var gridSize = 60;
+initialize();
+function initialize(){
+    //create the points
+    for(var i = 0; i<gridSize;i++){
+        var row = [];
+        for(var j = 0; j<gridSize;j++){
+            row.push(new Point(i,j));
+            row[j].draw();
+            if(i>0){
+                pts[i-1][j].neighbors.push(row[j]);
+                row[j].neighbors.push(pts[i-1][j]);
+            }
+            if(j>0){
+                row[j-1].neighbors.push(row[j]);
+                row[j].neighbors.push(row[j-1]);
+} }
+        pts.push(row);
+    }
+}
 function Point(x,y){
     this.drawX = (x+1)*10;
     this.drawY = (y+1)*10;

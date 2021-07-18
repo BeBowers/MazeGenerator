@@ -38,7 +38,8 @@ function initialize(){
             if(j>0){
                 row[j-1].neighbors.push(row[j]);
                 row[j].neighbors.push(row[j-1]);
-} }
+}
+ }
         pts.push(row);
     }
     var x = Math.floor(Math.random()*gridSize);
@@ -94,7 +95,8 @@ function Point(x,y){
         for(var i = this.neighbors.length-1;i>=0;i--){
             if(this.neighbors[i].visited){
                 this.neighbors.splice(i,1);
-} }
+}
+}
         // select a random unvisited neighbor if there are any
         if(this.neighbors.length>0){
             var idx = Math.floor(Math.random()*this.neighbors.length);
@@ -102,4 +104,5 @@ function Point(x,y){
         }else{
             return false;
         }
-}; }
+};
+ }

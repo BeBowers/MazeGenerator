@@ -1,1 +1,2 @@
 # MazeGenerator
+# An example project

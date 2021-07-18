@@ -4,6 +4,26 @@ var pts = [];
 // variable to set the size of the grid
 var gridSize = 60;
 initialize();
+function createMaze(){
+    drawMaze();
+    ptStack[0].draw();
+    var nb = ptStack[0].getUnvisited();
+    while(nb == false){
+        // 'pop' the first item off the stack
+        ptStack.splice(0,1);
+        if(ptStack.length == 0){
+            clearInterval(mazeInterval);
+return;
+}
+        nb = ptStack[0].getUnvisited();
+    }
+    nb.visited = true;
+    paths.push(new Path(ptStack[0],nb,"white"));
+    ptStack[0].paths.push(nb);
+    nb.paths.push(ptStack[0]);
+    // 'push' an item onto the stack
+    ptStack.splice(0,0,nb);
+}
 function initialize(){
     //create the points
     for(var i = 0; i<gridSize;i++){
@@ -21,6 +41,37 @@ function initialize(){
 } }
         pts.push(row);
     }
+}
+// used to store all the paths
+var paths = [];
+//constructor for a path object, Takes two points as parameters
+function Path(p1,p2,color){
+    this.p1 = p1;
+    this.p2 = p2;
+    // determines if the path is horizontal or vertical
+    this.vertical = p1.drawX == p2.drawX;
+    this.color = color;
+    this.draw = function(){
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        if(this.vertical){
+            // this code makes the corners look nice :)
+            ctx.moveTo(p1.drawX,Math.min(p1.drawY,p2.drawY)-2);
+            ctx.lineTo(p2.drawX,Math.max(p1.drawY,p2.drawY)+2);
+        }else{
+            ctx.moveTo(p1.drawX,p1.drawY);
+            ctx.lineTo(p2.drawX,p2.drawY);
+        }
+        ctx.stroke();
+        ctx.closePath();
+      }
+    }
+function drawMaze(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(var i = 0;i<paths.length;i++){
+      paths[i].draw();
+  }
 }
 function Point(x,y){
     this.drawX = (x+1)*10;
